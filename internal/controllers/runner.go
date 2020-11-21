@@ -17,15 +17,18 @@ func HelloWorld(ctx *gin.Context) {
 func Runner(ctx *gin.Context) {
 	var body models.RequestBody
 	var response string
+	var statusCode int
 	ctx.BindJSON(&body)
 
 	if !itemExists(dispatcher.ValidQuestions, body.ProgramID) {
 		response = "no question with that id"
+		statusCode = 404
 	} else {
 		response = dispatcher.DispatchOutput(body.ProgramID, body.Input)
+		statusCode = 200
 	}
 
-	ctx.JSON(200, gin.H{
+	ctx.JSON(statusCode, gin.H{
 		"id":     body.ProgramID,
 		"input":  body.Input,
 		"output": response,
