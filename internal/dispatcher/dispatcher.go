@@ -1,7 +1,6 @@
 package dispatcher
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -37,7 +36,6 @@ func DispatchOutput(programID string, inputString string) string {
 	// some mojo here
 	rescueStdout := os.Stdout
 	read, write, _ := os.Pipe()
-	fmt.Println("Running")
 	os.Stdout = write
 
 	//Just for testing, replace with your subProcess
@@ -52,8 +50,7 @@ func DispatchOutput(programID string, inputString string) string {
 	subProcess.Stdout = os.Stdout
 	subProcess.Stderr = os.Stderr
 
-	err = subProcess.Start()
-	fmt.Println(err)
+	subProcess.Start()
 	ui.CheckError(err, "Error executing code", true)
 
 	io.WriteString(stdin, inputString)

@@ -4,4 +4,9 @@
 
 The service responsible running code, feeding input, and returning responses.
 
-![https://i.imgur.com/9k3pc3u.png](https://i.imgur.com/9k3pc3u.png)
+![https://i.imgur.com/ubXnojN.png](https://i.imgur.com/ubXnojN.png)
+
+## Known Issues
+- Response too large: depending on client and connection, some responses might be too large to be returned to the user and might cause issues. As of now, the system does not return output on them, and following the principle of reliability, **continues to send responses to other clients connected**.
+
+![https://i.imgur.com/9HUhdOr.png](https://i.imgur.com/9HUhdOr.png)

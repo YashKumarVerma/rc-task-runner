@@ -7,6 +7,7 @@ import (
 	"github.com/YashKumarVerma/rc-task-runner/internal/config"
 	"github.com/YashKumarVerma/rc-task-runner/internal/controllers"
 	"github.com/YashKumarVerma/rc-task-runner/internal/dispatcher"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	// initialize web server
 	handler := gin.Default()
 	handler.GET("/", controllers.HelloWorld)
-	handler.POST("/run/:programID", controllers.Runner)
+	handler.POST("/run", controllers.Runner)
 
 	handler.Run(":" + strconv.Itoa(config.Load.Port))
 }
