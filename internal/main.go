@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	ui "github.com/YashKumarVerma/go-lib-ui"
 	"github.com/YashKumarVerma/rc-task-runner/internal/config"
 	"github.com/YashKumarVerma/rc-task-runner/internal/controllers"
@@ -19,5 +21,5 @@ func main() {
 	handler.GET("/", controllers.HelloWorld)
 	handler.POST("/run/:programID", controllers.Runner)
 
-	handler.Run()
+	handler.Run(":" + strconv.Itoa(config.Load.Port))
 }

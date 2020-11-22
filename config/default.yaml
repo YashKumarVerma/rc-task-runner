@@ -1,2 +1,10 @@
 app:
   name: "Reverse Coding : Code Runner"
+  
+  # app behavior 
+  port : 9000
+
+  # configurations related to codes to run
+  code_directory: "codes"
+  executable_name: "code.out"
+  

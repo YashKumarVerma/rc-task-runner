@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
+	"github.com/YashKumarVerma/rc-task-runner/internal/config"
+
 	ui "github.com/YashKumarVerma/go-lib-ui"
 )
 
@@ -16,7 +18,7 @@ var ValidQuestions []string
 
 // CheckInventory reads ./codes directory to check if passed question IDs are valid or not
 func CheckInventory() {
-	codesPath, err := filepath.Abs("./codes/")
+	codesPath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/")
 	ui.CheckError(err, "Cannot generate absolute path to ./codes", true)
 
 	files, err := ioutil.ReadDir(codesPath)
@@ -39,7 +41,7 @@ func DispatchOutput(programID string, inputString string) string {
 	os.Stdout = write
 
 	//Just for testing, replace with your subProcess
-	codePath, err := filepath.Abs("./codes/" + programID + "/code.out")
+	codePath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + programID + "/" + config.Load.ExecutableName)
 	ui.CheckError(err, "Error creating codePath", true)
 
 	subProcess := exec.Command(codePath)

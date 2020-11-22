@@ -16,14 +16,23 @@ func loadConfigurations() {
 
 	// set default configurations
 	viper.SetDefault("app.name", "Reverse Coding : Code Runner")
+	viper.SetDefault("app.code_directory", "codes")
+	viper.SetDefault("app.executable_name", "code.out")
+	viper.SetDefault("app.port", 8000)
 
 	// save configurations onto exported object
 	Load.Name = viper.GetString("app.name")
+	Load.CodeDirectory = viper.GetString("app.code_directory")
+	Load.ExecutableName = viper.GetString("app.executable_name")
+	Load.Port = viper.GetInt("app.port")
 }
 
 // Configuration store
 type Configuration struct {
-	Name string
+	Name           string
+	CodeDirectory  string
+	ExecutableName string
+	Port           int
 }
 
 // Load configurations to be used from other modules
