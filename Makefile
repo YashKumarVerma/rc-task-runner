@@ -8,3 +8,4 @@ run:
 clean:
 	rm -rf build/*
 	rm -rf output/*
+	rm -rf codes/*

@@ -1,6 +1,7 @@
 package dispatcher
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -26,6 +27,7 @@ func CheckInventory() {
 	validQuestionIDs := make([]string, 0)
 	for _, element := range files {
 		validQuestionIDs = append(validQuestionIDs, element.Name())
+		fmt.Println(element.Name())
 	}
 
 	ValidQuestions = validQuestionIDs
@@ -39,7 +41,7 @@ func DispatchOutput(programID string, inputString string) string {
 	os.Stdout = write
 
 	//Just for testing, replace with your subProcess
-	codePath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + programID + ".out")
+	codePath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + programID)
 	ui.CheckError(err, "Error creating codePath", true)
 
 	subProcess := exec.Command(codePath)
