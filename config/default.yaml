@@ -6,5 +6,6 @@ app:
 
   # configurations related to codes to run
   code_directory: "codes"
-  executable_name: "code.out"
   
+  # link seeding endpoint
+  seed_source: https://rc-broadcaster.vercel.app/api/app.js

@@ -21,6 +21,7 @@ func main() {
 	handler := gin.Default()
 	handler.GET("/", controllers.HelloWorld)
 	handler.POST("/run", controllers.Runner)
+	handler.GET("/sync", controllers.Sync)
 
 	handler.Run(":" + strconv.Itoa(config.Load.Port))
 }

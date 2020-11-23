@@ -39,7 +39,7 @@ func DispatchOutput(programID string, inputString string) string {
 	os.Stdout = write
 
 	//Just for testing, replace with your subProcess
-	codePath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + programID + "/" + config.Load.ExecutableName)
+	codePath, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + programID + ".out")
 	ui.CheckError(err, "Error creating codePath", true)
 
 	subProcess := exec.Command(codePath)
