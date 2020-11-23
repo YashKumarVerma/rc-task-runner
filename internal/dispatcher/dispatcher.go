@@ -7,9 +7,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/YashKumarVerma/rc-task-runner/internal/config"
-
 	ui "github.com/YashKumarVerma/go-lib-ui"
+	"github.com/YashKumarVerma/rc-task-runner/internal/config"
 )
 
 // ValidQuestions contain ids of all questions
