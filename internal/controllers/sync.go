@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/YashKumarVerma/rc-task-runner/internal/dispatcher"
@@ -48,6 +49,7 @@ func Sync(ctx *gin.Context) {
 	} else {
 		downloadCodeBinaries(response.Payload)
 		dispatcher.CheckInventory()
+		fixPermissions()
 	}
 }
 
@@ -72,8 +74,16 @@ func downloadFile(url string, filepath string) error {
 	if err != nil {
 		return err
 	}
+	if err != nil {
+		return err
+	}
 	defer out.Close()
 
 	_, err = io.Copy(out, resp.Body)
 	return err
+}
+
+func fixPermissions() {
+	_, err := exec.Command("chmod", "--recursive", "+x", config.Load.CodeDirectory).CombinedOutput()
+	ui.CheckError(err, "Unable to set codes as executable", true)
 }
