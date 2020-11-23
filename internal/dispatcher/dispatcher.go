@@ -1,7 +1,6 @@
 package dispatcher
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -27,7 +26,6 @@ func CheckInventory() {
 	validQuestionIDs := make([]string, 0)
 	for _, element := range files {
 		validQuestionIDs = append(validQuestionIDs, element.Name())
-		fmt.Println(element.Name())
 	}
 
 	ValidQuestions = validQuestionIDs
