@@ -22,13 +22,13 @@ jobs:
       - name: Publish UNIX Build
         uses: actions/upload-artifact@v2
         with:
-          name: task-runner_unix
+          name: task-runner-unix
           path: build/task-runner
 
       - name: Publish Windows Build
         uses: actions/upload-artifact@v2
         with:
-          name: task-runner_windows
+          name: task-runner-windows
           path: build/task-runner.exe
 
   docker-build-push:
@@ -40,6 +40,7 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -55,10 +56,11 @@ jobs:
       - name: Fetch build artifact
         uses: actions/download-artifact@v2
         with:
-          name: task-runner_unix
+          name: task-runner-unix
       
       - name: Prepare for build
         run: |
+          ls
           mkdir build
           mv task-runner_unix build/task-runner 
           
