@@ -84,7 +84,7 @@ func downloadFile(url string, filepath string) error {
 }
 
 func fixPermissions() {
-	_, err := exec.Command("chmod", "--recursive", "+x", config.Load.CodeDirectory).CombinedOutput()
+	_, err := exec.Command("chmod", "-R", "+x", config.Load.CodeDirectory).CombinedOutput()
 	ui.CheckError(err, "Unable to set codes as executable", true)
 }
 
