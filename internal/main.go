@@ -14,6 +14,9 @@ import (
 func main() {
 	config.Initialize()
 	dispatcher.CheckInventory()
+	for _, element := range dispatcher.ValidQuestions {
+		ui.ContextPrint("gear", element)
+	}
 
 	ui.ContextPrint("thumbs_up", config.Load.Name)
 

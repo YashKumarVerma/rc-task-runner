@@ -18,8 +18,8 @@ import (
 
 // type declarations
 type entryStruct struct {
-	ID  string   `json:"id"`
-	URL []string `json:"url"`
+	ID     string `json:"id"`
+	Object string `json:"object"`
 }
 
 type responseStruct struct {
@@ -49,14 +49,15 @@ func Sync(ctx *gin.Context) {
 		downloadCodeBinaries(response.Payload)
 		dispatcher.CheckInventory()
 		fixPermissions()
+		convertObjectFilesToArchCode(response.Payload)
 	}
 }
 
 // function to download the files from given links and place at correct place
 func downloadCodeBinaries(binaryDetails []entryStruct) {
 	for _, item := range binaryDetails {
-		targetLocation, _ := filepath.Abs("./" + config.Load.CodeDirectory + "/" + item.ID)
-		err := downloadFile(item.URL[0], targetLocation)
+		targetLocation, _ := filepath.Abs("./" + config.Load.CodeDirectory + "/" + item.ID + ".o")
+		err := downloadFile(item.Object, targetLocation)
 		ui.CheckError(err, "Error downloading binary :"+item.ID, false)
 	}
 }
@@ -85,4 +86,14 @@ func downloadFile(url string, filepath string) error {
 func fixPermissions() {
 	_, err := exec.Command("chmod", "--recursive", "+x", config.Load.CodeDirectory).CombinedOutput()
 	ui.CheckError(err, "Unable to set codes as executable", true)
+}
+
+func convertObjectFilesToArchCode(payload []entryStruct) {
+	for _, object := range payload {
+		oFile, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + object.ID + ".o")
+		outFile, err := filepath.Abs("./" + config.Load.CodeDirectory + "/" + object.ID + ".out")
+		_, err = exec.Command("/usr/bin/g++", "-o", outFile, oFile).CombinedOutput()
+		ui.CheckError(err, "Unable to compile "+object.ID, true)
+		ui.ContextPrint("package", "Compiling "+object.ID)
+	}
 }
