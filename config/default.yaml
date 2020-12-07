@@ -2,7 +2,7 @@ app:
   name: "Reverse Coding : Code Runner"
   
   # app behavior 
-  port : 8080
+  port : 8000
 
   # configurations related to codes to run
   code_directory: "codes"
