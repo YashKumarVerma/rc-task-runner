@@ -17,7 +17,7 @@ jobs:
         run: make pack_unix
 
       - name: Build for windows
-        run: make pack_run
+        run: make pack_win
   
   docker-build-push:
     runs-on: ubuntu-latest
