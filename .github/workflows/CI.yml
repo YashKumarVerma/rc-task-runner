@@ -2,7 +2,7 @@ name: Build package
 on: [push, pull_request]
 jobs:
   build:
-    name: Build
+    name: Golang Binary Build
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.15
@@ -13,10 +13,10 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v1
 
-      - name: Build for unix
+      - name: Build for unix systems
         run: make pack_unix
 
-      - name: Build for windows
+      - name: Build for windows systems
         run: make pack_win
 
       - name: Publish UNIX Build
@@ -32,7 +32,7 @@ jobs:
           path: build/task-runner.exe
 
   docker-build-push:
-    name: Docker 
+    name: Docker build, publish as yashkumarverma/rc-task-runner
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/master'
@@ -60,9 +60,8 @@ jobs:
       
       - name: Prepare for build
         run: |
-          ls
           mkdir build
-          mv task-runner_unix build/task-runner 
+          mv task-runner build/task-runner 
           
       - name: Build and push
         uses: docker/build-push-action@v2
