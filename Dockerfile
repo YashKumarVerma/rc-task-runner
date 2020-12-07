@@ -10,14 +10,16 @@ ENV GIN_MODE=release
 WORKDIR /
 
 # take built packge into container
-COPY ./build/i-judge ./i-judge
+COPY ./build/task-runner ./task-runner
 
 # create directory to store downloaded codes
-CMD ["mkdir codes"]
+RUN mkdir codes
 
-# run the server
-CMD ["chmod +x i-judge"]
-CMD ["i-judge"]
+# grant permissions to execute
+RUN chmod +x task-runner
+
+# launch server
+CMD ["./task-runner"]
 
 # exporse listening port
 EXPOSE 8000

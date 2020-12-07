@@ -18,29 +18,51 @@ jobs:
 
       - name: Build for windows
         run: make pack_win
-  
+
+      - name: Publish UNIX Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: task-runner_unix
+          path: build/task-runner
+
+      - name: Publish Windows Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: task-runner_windows
+          path: build/task-runner.exe
+
   docker-build-push:
+    name: Docker 
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/master'
     steps:
-      -
-        name: Checkout
+
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
+
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
+        
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+
+      - name: Fetch build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: task-runner_unix
+      
+      - name: Prepare for build
+        run: |
+          mkdir build
+          mv task-runner_unix build/task-runner 
+          
+      - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
